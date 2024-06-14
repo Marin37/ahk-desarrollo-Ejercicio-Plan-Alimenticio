@@ -1,0 +1,58 @@
+npm install
+npm init
+npm install jest
+configurar:
+	"type": "module"
+	"scripts.test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+
+Profesionales
+- nombre
+- apellido
+- especialidad
+- matricula
+
+PlanAlimenticio
+- edad
+- pesoactual
+- medidaCintura
+- duracion (semanal, quincenal, mensual)
+- objetivos
+- comidas []
+- colaciones () actualizables
+- bebidas
+
++ generarInflacion}}}}}}}]]}
+objetivo.estaCumplido
+evaluacion -> objetivosCumplidos/Total calificacion 
+
+Comida  
+- tipo: desayunoMerienda DM o AlmuerzoCena AC
+- descripcion
+- composicion (col: Ingrediente)
+
+Colacion
+
+
+Componentes/Porcion/Ingrediente
+- tipo (proteina, carbohidrato, vegetal)
+- porción/porcentaje
+
+Pacientes
+- nombre
+- apellido
+- edad
+- sexo
+- disciplina
+
+Metodos:
+1.Permitir obtener la calificación final de un plan alimenticio, en base al cumplimiento de sus objetivos.
+2.Permitir saber la cantidad total de comidas de un plan alimenticio.
+3.Permitir saber la cantidad de comidas de un tipo en particular (DM/AC) de un plan alimenticio.
+4.Permitir saber si el plan alimenticio es “fuerte en proteínas”: un plan alimenticio es “fuerte en proteínas” cuando el promedio de porcentaje de proteínas en todas las comidas AC es igual o superior al 50%.
+5.Permitir saber si el plan alimenticio es “bien verde”: un plan alimenticio es “bien verde” cuando el promedio de porcentaje de vegetales en todas las comidas AC es superior al 35%.
+6.Permitir saber la cantidad total de colaciones permitidas en un plan alimenticio.
+7.Permitir saber la cantidad total de bebidas permitidas en un plan alimenticio.
+
+
+
+
