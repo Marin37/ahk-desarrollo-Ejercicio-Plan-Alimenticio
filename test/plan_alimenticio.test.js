@@ -4,9 +4,15 @@ import { Colacion } from "../entities/colacion";
 import { Objetivo } from "../entities/objetivos";
 import { PlanAlimenticio } from "../entities/plan_alimenticio";
 import { Ingrediente } from "../entities/ingrediente";
+import * as util from "../utils"
+
+let plan;
+
+beforeEach(() => {
+    plan = new PlanAlimenticio();
+})
 
 test("obtener calificacion correspondiente segun los objetivos en todas las etapas", () => {
-    let plan = new PlanAlimenticio();
     let obj1 = new Objetivo();
     let obj2 = new Objetivo();
     let obj3 = new Objetivo();
@@ -17,6 +23,7 @@ test("obtener calificacion correspondiente segun los objetivos en todas las etap
     plan.objetivos.push(obj3);
     plan.objetivos.push(obj4);
 
+    // veo el estado a medida que voy cumpliendo objetivos
     expect(plan.generarEvaluacion()).toBe("Regular");
     obj1.completar();
     expect(plan.generarEvaluacion()).toBe("Regular");
@@ -29,8 +36,7 @@ test("obtener calificacion correspondiente segun los objetivos en todas las etap
 
 });
 
-test("ver cantidad total de comidas", () => {
-    const plan = new PlanAlimenticio();
+test("ver cantidad total de comidas en cada paso", () => {
     const comida1 = new Comida();
     const comida2 = new Comida();
     const comida3 = new Comida();
@@ -48,15 +54,14 @@ test("ver cantidad total de comidas", () => {
     expect(plan.cantidadDeComidas()).toBe(4);
     plan.agregarComida(comida5);
     expect(plan.cantidadDeComidas()).toBe(5);
-
 });
 
-test("ver la cantidad de comidas de cada tipo", () => {
+test("ver la cantidad de comidas de cada tipo en cada paso", () => {
     let plan = new PlanAlimenticio();
 
-    const comida1 = new Comida("DM");
-    const comida2 = new Comida("AC");
-    const comida3 = new Comida("AC");
+    let comida1 = new Comida("DM");
+    let comida2 = new Comida("AC");
+    let comida3 = new Comida("AC");
 
     expect(plan.cantidadDeComidasDeTipo("DM")).toBe(0);
     expect(plan.cantidadDeComidasDeTipo("AC")).toBe(0);
@@ -69,10 +74,9 @@ test("ver la cantidad de comidas de cada tipo", () => {
     plan.agregarComida(comida3);
     expect(plan.cantidadDeComidasDeTipo("DM")).toBe(1);
     expect(plan.cantidadDeComidasDeTipo("AC")).toBe(2);
-
 });
 
-test("ver cantidad de colaciones permitidas", () => {
+test("ver cantidad de colaciones permitidas en cada paso", () => {
     let plan = new PlanAlimenticio();
     let colacion1 = new Colacion();
     let colacion2 = new Colacion();
@@ -87,8 +91,7 @@ test("ver cantidad de colaciones permitidas", () => {
     expect(plan.cantidadDeColacionesPermitidas()).toBe(3);
 });
 
-test("ver cantidad de bebidas permitidas", () => {
-    let plan = new PlanAlimenticio();
+test("ver cantidad de bebidas permitidas en cada paso", () => {
     let bebida1 = new Bebida();
     let bebida2 = new Bebida();
     let bebida3 = new Bebida();
@@ -100,46 +103,41 @@ test("ver cantidad de bebidas permitidas", () => {
     expect(plan.cantidadDeBebidasPermitidas()).toBe(2);
     plan.agregarBebida(bebida3);
     expect(plan.cantidadDeBebidasPermitidas()).toBe(3);
-    
 });
 
 test("plan fuerte en proteinas", () => {
-    const PROTEINA = 1;
-    const CARBOHIDRATO = 2;
-    const VEGETAL = 3;
 
-    let plan = new PlanAlimenticio();
     let comida1 = new Comida("AC");
     let comida2 = new Comida("AC");
-    let ing1 = new Ingrediente(PROTEINA, 200);
-    let ing2 = new Ingrediente(CARBOHIDRATO, 5);
+    let ing1 = new Ingrediente(util.PROTEINA, 200);
+    let ing2 = new Ingrediente(util.CARBOHIDRATO, 5);
 
+    // primero veo que lo cumpla
     comida1.composicion.push(ing1);
     comida1.composicion.push(ing2);
     plan.comidas.push(comida1);
     expect(plan.esFuerteEnProteina()).toBeTruthy();
 
+    // luego hago que no se cumpla
     comida2.composicion.push(ing2);
     plan.comidas.push(comida2);
     expect(plan.esFuerteEnProteina()).toBeFalsy();
 });
 
 test("plan bien verde", () => {
-    const PROTEINA = 1;
-    const CARBOHIDRATO = 2;
-    const VEGETAL = 3;
 
-    let plan = new PlanAlimenticio();
     let comida1 = new Comida("AC");
     let comida2 = new Comida("AC");
-    let ing1 = new Ingrediente(VEGETAL, 200);
-    let ing2 = new Ingrediente(CARBOHIDRATO, 5);
+    let ing1 = new Ingrediente(util.VEGETAL, 200);
+    let ing2 = new Ingrediente(util.CARBOHIDRATO, 5);
     
+    // primero veo que lo cumpla
     comida1.composicion.push(ing1);
     comida1.composicion.push(ing2);
     plan.comidas.push(comida1);
     expect(plan.esBienVerde()).toBeTruthy();
 
+    // luego hago que no se cumpla
     comida2.composicion.push(ing2);
     plan.comidas.push(comida2);
     expect(plan.esBienVerde()).toBeFalsy();

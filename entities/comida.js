@@ -1,9 +1,5 @@
 import * as util from "../utils"
 
-const PROTEINA = 1;
-const CARBOHIDRATO = 2;
-const VEGETAL = 3;
-
 export class Comida {
     tipo; // DM o AC
     descripcion;
@@ -27,23 +23,24 @@ export class Comida {
         let porcionVegetal = 0;
 
         this.composicion.forEach(ing => {
-            let m = ing.medida;
-            porcionTotal += m;
+            porcionTotal += ing.medida;
             switch (ing.tipo) {
-                case PROTEINA:
-                    porcionProteina += m;
+                case util.PROTEINA:
+                    porcionProteina += ing.medida;
                     break;
-                case CARBOHIDRATO:
-                    porcionCarbohidrato += m;
+                case util.CARBOHIDRATO:
+                    porcionCarbohidrato += ing.medida;
                     break;
-                case VEGETAL:
-                    porcionVegetal += m;
+                case util.VEGETAL:
+                    porcionVegetal += ing.medida;
                     break;
             }
         });
+
         const porcentajeProteina = util.promedio(porcionTotal,porcionProteina);
         const porcentajeCarbohidrato = util.promedio(porcionTotal,porcionCarbohidrato);
         const porcentajeVegetal = util.promedio(porcionTotal,porcionVegetal);
+        
         return {porcionTotal, porcentajeProteina, porcentajeCarbohidrato, porcentajeVegetal}
     }
     

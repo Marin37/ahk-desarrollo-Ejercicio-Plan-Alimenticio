@@ -8,9 +8,6 @@ export class Objetivo {
         this.descripcion = descripcion;
     }
 
-    // estaCumplido(){
-    //     return this.cumplido;
-    // }
     completar(){
         this.cumplido = true;
     }
